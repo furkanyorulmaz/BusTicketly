@@ -1,2 +1,2 @@
 # BusTicketly
-SOFT3101/Group2 
+Intercity Bus Ticket Reservation/Selling System
