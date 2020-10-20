@@ -1,2 +1,2 @@
 # BusTicketly
-SE301/Group2 
+SOFT3101/Group2 
