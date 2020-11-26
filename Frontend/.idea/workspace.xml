@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f468cdd1-f8ec-4d80-bcf0-c94719c949ce" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1jSGenHlcLG9wptN3uvfdgzaVU3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\WebPages" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="addJourney_A.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/WebPages/addJourney_A.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.addJourney_A.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f468cdd1-f8ec-4d80-bcf0-c94719c949ce" name="Default Changelist" comment="" />
+      <created>1603790176246</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603790176246</updated>
+      <workItem from="1603790177360" duration="25759000" />
+      <workItem from="1604222144460" duration="20858000" />
+      <workItem from="1604298810652" duration="3070000" />
+      <workItem from="1604312233584" duration="2481000" />
+      <workItem from="1604331751177" duration="3885000" />
+      <workItem from="1604395678700" duration="9757000" />
+      <workItem from="1604413101759" duration="19714000" />
+      <workItem from="1604463973358" duration="8517000" />
+      <workItem from="1604481752291" duration="307000" />
+      <workItem from="1604496165192" duration="6946000" />
+      <workItem from="1604589688300" duration="88000" />
+      <workItem from="1604732013869" duration="5046000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="540" y="265" key="FileChooserDialogImpl" timestamp="1604433969095">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604433969095" />
+    <state width="1205" height="214" key="GridCell.Tab.0.bottom" timestamp="1604253934507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1205" height="214" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604253934507" />
+    <state width="1205" height="214" key="GridCell.Tab.0.center" timestamp="1604253934507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1205" height="214" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604253934507" />
+    <state width="1205" height="214" key="GridCell.Tab.0.left" timestamp="1604253934507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1205" height="214" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604253934507" />
+    <state width="1205" height="214" key="GridCell.Tab.0.right" timestamp="1604253934507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1205" height="214" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604253934507" />
+    <state x="378" y="107" width="1392" height="857" key="dock-window-1" timestamp="1604417388442">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="378" y="107" width="1392" height="857" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1604417388442" />
+    <state x="422" y="283" key="run.anything.popup" timestamp="1604427385051">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="422" y="283" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604427385051" />
+  </component>
+</project>
