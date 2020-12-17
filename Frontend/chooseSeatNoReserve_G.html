@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maxmum-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>CHOOSE SEAT NUMBER G</title>
+</head>
+<body>
+<!-- Navbar -->
+<div class="navbar">
+
+    <!-- Left-aligned links (default) -->
+    <a href="homepage_G.html">Homepage</a>
+    <a href="aboutUs_G.html">About Us</a>
+    <a href="contactUs_G.html">Contact Us</a>
+    <a href="contactUs_G.html">Support</a>
+
+    <!-- Right-aligned links -->
+    <div class="navbar-right">
+        <a href="login.html">Login</a>
+        <a href="registration.html">Registration</a>
+    </div>
+
+</div>
+
+<!-- <input type="checkbox" id="    myCheck" onclick="myFunction()">  -->
+
+<div class="container">
+    <h1>Choose Seat Number</h1>
+    <hr class="hr_main">
+
+    <div class="row">
+        <div class="column">
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">1</p>
+                </div>
+            </div>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">2</p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">3</p>
+                </div>
+            </div>
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">4</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="column">
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">5</p>
+                </div>
+            </div>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">6</p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">7</p>
+                </div>
+            </div>
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">8</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">9</p>
+                </div>
+            </div>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">10</p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">11</p>
+                </div>
+            </div>
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">12</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">13</p>
+                </div>
+            </div>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">14</p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">15</p>
+                </div>
+            </div>
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">16</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">17</p>
+                </div>
+            </div>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">18</p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">19</p>
+                </div>
+            </div>
+            <div class="outer-seat" class="div-inline">
+                <div class="inner-seat">
+                    <p class="seatNumber">20</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <fieldset>
+        <legend>Choose your gender:</legend>
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male" value="male" checked>
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female" value="female">
+    </fieldset>
+
+    <div class="cancel_signup">
+        <button type="button" class="returnbtn"><a href="listOfJourneys_G.html">Return</a></button>
+        <button type="submit" class="nextbtn"><a href="ticketPaymentReserve_G.html">Next</a></button>
+    </div>
+</div>
+
+
+<br>
+<footer class="main_footer">
+    <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
+</footer>
+
+<script>
+
+    $(".outer-seat").on("click", function () {
+        $(this).toggleClass('selected-outerColor');
+    });
+
+    $(".inner-seat").on("click", function () {
+        $(this).toggleClass('selected-innerColor');
+    });
+</script>
+
+</body>
+</html>
