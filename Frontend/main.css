@@ -3,13 +3,18 @@ body, html {
     font-weight: bold;
     height: 100%;
     margin: auto;
-    font-size: 20px;
 }
 
 * {
     box-sizing: border-box
 }
 
+/*main.ccs kısmındaki düz cizgi görünümü
+.hr_main {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+    width: 100%;
+}*/
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
@@ -122,7 +127,7 @@ input[type=submit]:hover {
     background-color: dodgerblue;
 }
 
-input[type=text], input[type=password], input[type=date]{
+input[type=text], input[type=password], input[type=date] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -131,7 +136,7 @@ input[type=text], input[type=password], input[type=date]{
     background: #f1f1f1;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=date]:focus{
+input[type=text]:focus, input[type=password]:focus, input[type=date]:focus {
     background-color: #ddd;
     outline: none;
 }
@@ -340,15 +345,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=date]:focus{
     outline: none;
 }
 
-.msg_content{
-    width: 100%;
-    height: 165px;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: 3px solid #b7d7e8;
-    background: #f1f1f1;
-}
 /*Contact Us Page CSS END*/
 
 /*About us CSS START*/
@@ -383,14 +379,19 @@ input[type=text]:focus, input[type=password]:focus, input[type=date]:focus{
 
 /*Campaign  CSS START*/
 .campaign_subject {
-
-    font-size: 20px;
+    height: 170px;
+    width: 70%;
+    font-family: Candara;
+    padding: 25px;
+    margin-left: 20%;
 }
 
 /*Campaign  CSS END*/
 
 /*RegUser info box CCS START*/
 .message_text {
+    border: 1px solid darkgray;
+    border-radius: 10px;
     width: 80%;
     height: 100px;
     padding: 50px;
@@ -488,23 +489,22 @@ button:hover {
     width: 20%;
 }
 
-.returnbtn, .nextbtn {
+.returnbtn, .nextbtn{
     margin-top: 5%;
     margin-bottom: 2%;
     width: 25%;
 }
 
-.returnbtn {
+.returnbtn{
     background-color: darkgreen;
 }
 
-.nextbtn {
+.nextbtn{
     background-color: #008ae6;
     float: right;
     width: 15%;
 
 }
-
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
     .cancelbtn, .signupbtn, .officerSignbtn, .adminSignbtn {
@@ -549,7 +549,6 @@ button:hover {
     margin-right: 150px;
     margin-top: -10px;
     border-radius: 20px;
-    border-radius: 20px;
 }
 
 /****************ALL BUTTONS END*********************************/
@@ -558,15 +557,14 @@ button:hover {
 #seats {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 60%;
+    width: 100%;
 }
 
 #seats td, #seats th {
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     padding: 5px;
     text-align: center;
 }
-
 /******************LIST OF JOURNEY*****************/
 
 /******************SEAT PLAN CSS*****************/
@@ -576,7 +574,7 @@ button:hover {
     padding: 0 25px;
 }
 
-.seatNumber {
+.seatNumber{
     text-align: center;
     padding: 2px;
     font-size: 24px;
@@ -615,5 +613,31 @@ button:hover {
 .selected-outerColor {
     border-color: #3366CC;
 }
-
 /******************SEAT PLAN CSS*****************/
+
+/* The Modal (background) */
+.container_modal {
+    padding: 16px;
+    text-align: center;
+}
+
+
+.modal {
+    display: marker; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 20px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 2px solid #888;
+    width: 25%; /* Could be more or less, depending on screen size */
+}

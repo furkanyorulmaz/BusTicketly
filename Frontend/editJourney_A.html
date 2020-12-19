@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maxmum-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <title>VIEW&EDIT JOURNEY</title>
+</head>
+<body>
+<!-- Navbar -->
+<div class="navbar">
+
+    <!-- Right-aligned links -->
+    <div class="navbar-right">
+        <a href="adminProfile.html">Admin Profile</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+</div>
+
+<div class="search-container">
+    <h1>Search Journey</h1>
+    <form action="/action_page.php">
+        <input style="width: 50%" type="text" placeholder="Enter PNR & Journey ID" name="search">
+        <button style="margin-right: 28%" type="submit" class="addjourneybtn">Find Journey</button>
+    </form>
+</div>
+
+<div class="container">
+    <h1>View&Edit Journey</h1>
+    <hr class="hr_main">
+
+    <label><b>Id</b></label>
+    <input type="text" name="id" required>
+
+    <label><b>From</b></label>
+    <input type="text" placeholder="From" name="from" required>
+
+    <label><b>To</b></label>
+    <input type="text" placeholder="To" name="to" required>
+
+    <label><b>Price</b></label>
+    <input type="text" placeholder="Enter Price" name="price" required>
+
+    <label><b>Date</b></label>
+    <input type="text"  name="price" required>
+
+    <button type="submit" class="addjourneybtn"><a href="adminProfile.html">Edit Journey</a></button>
+</div>
+
+
+<footer class="main_footer">
+    <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
+</footer>
+
+</body>
+</html>
