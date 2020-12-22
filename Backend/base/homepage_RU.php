@@ -1,6 +1,6 @@
 <?php
 session_start();
-#$conn = mysqli_connect("localhost", "root", "", "busdb");
+
 include("../dbconnect.php");
 
 if (!isset($_SESSION['email'])) {
