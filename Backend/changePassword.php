@@ -33,21 +33,28 @@
 
 <?php
 session_start();
-#$conn = mysqli_connect("localhost", "root", "", "busdb");
 include ("dbconnect.php");
+
 if (isset($_POST["reset_pass"])) {
     $userEmail = $_POST['email'];
     $psw = $_POST['psw'];
     $psw_repeat = $_POST['psw-repeat'];
 
     if ($psw != $psw_repeat) {
-        echo "Passwords not match";
+        echo '<script>
+                    if(confirm("Passwords do not match !")) {
+                    window.location.href = "../BusTicketly/login.php"
+                    }</script>';
+        exit();
     }
 
     $sql = "SELECT * FROM users WHERE emailaddress=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        echo "Error in the sql check !";
+        echo '<script>
+                    if(confirm("Some connection problem occurs !")) {
+                    window.location.href = "../BusTicketly/login.php"
+                    }</script>';
         exit();
     } else {
         mysqli_stmt_bind_param($stmt, "s", $userEmail);
@@ -60,9 +67,17 @@ if (isset($_POST["reset_pass"])) {
             $_SESSION['psw'] = $row['pwd'];
             $reset_psw = "UPDATE users SET pwd='$pwdHash' WHERE emailaddress='$userEmail'";
             $output = mysqli_query($conn, $reset_psw);
-            echo header("Location: login.php");
+            echo '<script>
+                    if(confirm("Your password changed, successfully !")) {
+                    window.location.href = "../BusTicketly/login.php"
+                    }</script>';
+            exit();
         } else {
-            echo "Error";
+            echo '<script>
+                    if(confirm("Some problems occurs !")) {
+                    window.location.href = "../BusTicketly/login.php"
+                    }</script>';
+            exit();
         }
     }
 }
