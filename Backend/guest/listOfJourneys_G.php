@@ -106,7 +106,7 @@ $price = "";
             <th>Buy Ticket Action</th>
             <!-- Burası Biletlerin listelenmeye basladıgı yer -->
             <?php
-            $query = "SELECT * FROM journey WHERE DeparturePlace='$from' AND DestinationPlace='$to' ORDER BY journeyTime";
+            $query = "SELECT * FROM journey WHERE DeparturePlace='$from' AND DestinationPlace='$to' AND journeyDate='$date' ORDER BY journeyDate";
 
             if (isset($conn)) {
             $result = mysqli_query($conn, $query);
