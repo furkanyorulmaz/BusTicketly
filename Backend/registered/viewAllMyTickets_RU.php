@@ -65,7 +65,7 @@ $email = $_SESSION['email'];
             <th>Date</th>
             <th>Time</th>
             <th>Price</th>
-            <th>SeatId</th>
+            <th>SeatNo</th>
             <th>Ticket Type</th>
             <?php
             $query = "SELECT * FROM journey J, ticket T WHERE J.journeyId=T.journeyId AND T.emailaddress='$email' AND T.seatId!='0' ORDER BY J.journeyDate";
@@ -76,6 +76,20 @@ $email = $_SESSION['email'];
                 echo '<style>p{color:red;}</style><p>Warning: Any ticket find !</p>';
             }
             while ($row = mysqli_fetch_array($result)) {
+
+            $seatId1 = $row['seatId'];
+            //if reserve ticket date passed ticket cannot be cancelled
+            $today = strtotime("today");
+            $journeyDate = $row['journeyDate'];
+            $journeyDate = strtotime($journeyDate);
+
+            if ($today > $journeyDate) {
+                $ticketType = $row['ticketType'];
+                $PNR = $row['PNR'];
+
+                $pastTicket = "UPDATE ticket SET ticketType='PAST',  seatId='0' WHERE PNR=$PNR";
+                $connection = mysqli_query($conn, $pastTicket);
+            }
             ?>
         </tr>
         <tr>
@@ -105,7 +119,7 @@ $email = $_SESSION['email'];
                     echo $price;
                 }
                 ?></td>
-            <td><?php echo $row['seatId']; ?></td>
+            <td><?php echo $seatId1 ?></td>
             <td><?php echo $row['ticketType']; ?></td>
             <td>
                 <?php
@@ -133,7 +147,7 @@ $email = $_SESSION['email'];
             <th>Date</th>
             <th>Time</th>
             <th>Price</th>
-            <th>SeatId</th>
+            <th>SeatNo</th>
             <th>Ticket Type</th>
             <?php
             $query2 = "SELECT * FROM journey J, reservation R WHERE J.journeyId=R.journeyId AND R.seatId!='0' AND R.emailLUser='$email' ORDER BY J.journeyDate";
@@ -142,6 +156,19 @@ $email = $_SESSION['email'];
                 echo '<style>p{color:red;}</style><p>Warning: Any ticket find !</p>';
             }
             while ($row2 = mysqli_fetch_array($result2)) {
+            $seatId2 = $row2['seatId'];
+            //if reserve ticket date passed ticket cannot be cancelled
+            $today = strtotime("today");
+            $journeyDate = $row2['journeyDate'];
+            $journeyDate = strtotime($journeyDate);
+
+            if ($today > $journeyDate) {
+                $ticketType = $row2['ticketType'];
+                $reservationId = $row2['reservationId'];
+
+                $pastTicket = "UPDATE reservation SET ticketType='PAST', seatId='0' WHERE reservationId=$reservationId";
+                $connection = mysqli_query($conn, $pastTicket);
+            }
             ?>
         </tr>
         <tr>
@@ -151,7 +178,7 @@ $email = $_SESSION['email'];
             <td><?php echo $row2['journeyDate']; ?></td>
             <td><?php echo $row2['journeyTime']; ?></td>
             <td><?php echo $row2['price']; ?></td>
-            <td><?php echo $row2['seatId']; ?></td>
+            <td><?php echo $seatId2 ?></td>
             <td><?php echo $row2['ticketType']; ?></td>
             <td>
                 <?php
@@ -159,7 +186,8 @@ $email = $_SESSION['email'];
                     echo "<button type='submit' style=\"background-color: darkgray; width: 70%; color: black; font-weight: bolder; border-radius: 20px; font-size: 14px;\" disabled>Disabled Ticket</button>";
                 } else {
                     echo "<button type='submit' style=\"background-color: crimson; width: 70%; border-radius: 20px; font-weight: bolder; font-size: 14px;\"><a href='reserveTicketCancel.php'>Cancel Ticket</a></button>";
-                } ?>
+                }
+                ?>
             </td>
             <?php
             }
