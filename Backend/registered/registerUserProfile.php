@@ -75,7 +75,7 @@ $phone = $row['mobilePhone'];
         <br>
         <br>
         <label><b>Gender: <?php
-                if ($gender = 'F') {
+                if ($gender == 'F') {
                     echo " Female";
                 } else {
                     echo " Male";
@@ -103,9 +103,9 @@ $phone = $row['mobilePhone'];
     <h1>All Transactions</h1>
     <hr class="hr_main">
     <button type="submit" class="ticket_transactions_btn"><a href="viewAllMyTickets_RU.php">All My Tickets</a></button>
+    <button type="submit" class="ticket_transactions_btn"><a href="pastTickets_RU.php">Date Past Tickets</a></button>
     <button type="submit" class="ticket_transactions_btn"><a href="infoBox_RU.php">Info Box</a></button>
-    <button type="submit" class="ticket_transactions_btn"><a href="../base/contactUs_RU.php">Add Comment</a></button>
-    <button type="submit" class="ticket_transactions_btn"><a href="campaigns_RU.php">See Campaigns</a></button>
+    <button type="submit" class="ticket_transactions_btn"><a href="campaigns_RU.php">View Campaigns</a></button>
 </div>
 
 <footer class="main_footer">
