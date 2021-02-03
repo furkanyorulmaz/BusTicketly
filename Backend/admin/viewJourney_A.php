@@ -33,65 +33,93 @@ if (isset($_SESSION)){
 
 </div>
 
-<form action="#" method="POST">
-    <div class="container">
-        <h1>View Journey</h1>
-        <hr class="hr_main">
 
-        <table id="seats" style="width: 80%">
-            <tr style="color: green">
-                <th>Journey Id</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Price</th>
-                <th>Cancel Journey Action</th>
+<div class="container">
+    <h1>View Journey</h1>
+    <hr class="hr_main">
 
-                <!-- Burası Biletlerin listelenmeye basladıgı yer -->
-                <?php
-                date_default_timezone_set("Europe/Istanbul");
+    <table id="seats" style="width: 90%">
+        <tr style="color: green">
+            <th>Journey Id</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Capacity</th>
+            <th>Edit Journey </th>
+            <th>Cancel Journey </th>
+            <th>Details Journey</th>
 
-                $query = "SELECT * FROM journey ORDER BY journeyDate";
-                if (isset($conn)) {
-                $result = mysqli_query($conn, $query);
-
-                while ($row = mysqli_fetch_array($result)){
-                $today = strtotime("today");
-                $journeyDate = $row['journeyDate'];
-                $journeyDate = strtotime($journeyDate);
-                #Today and future journeys list
-                if ($today <= $journeyDate){
-                ?>
-            </tr>
-            <tr>
-                <td><?php echo $row['journeyId']; ?></td>
-                <td><?php echo $row['DeparturePlace']; ?></td>
-                <td><?php echo $row['DestinationPlace']; ?></td>
-                <td><?php echo $row['journeyDate']; ?></td>
-                <td><?php echo $row['journeyTime']; ?></td>
-                <td><?php echo $row['price']; ?></td>
-                <td>
-                    <button style="font-size: 16px; background-color: crimson; width: 60%; border-radius: 20px"
-                            name="cancel"><a href="cancelJourney_A.php">Cancel Journey</a></button>
-                </td>
-            </tr>
+            <!-- Burası Biletlerin listelenmeye basladıgı yer -->
             <?php
-            $_SESSION['id'] = $row['journeyId'];
-            $_SESSION['from'] = $row['DeparturePlace'];
-            $_SESSION['to'] = $row['DestinationPlace'];
-            $_SESSION['date'] = $row['journeyDate'];
-            $_SESSION['time'] = $row['journeyTime'];
-            $_SESSION['price'] = $row['price'];
-            }
-            }
-            }
-            }
+            date_default_timezone_set("Europe/Istanbul");
+
+            $query = "SELECT * FROM journey ORDER BY journeyDate";
+            if (isset($conn)) {
+            $result = mysqli_query($conn, $query);
+
+            while ($row = mysqli_fetch_array($result)){
+            $today = strtotime("today");
+            $journeyDate = $row['journeyDate'];
+            $journeyDate = strtotime($journeyDate);
+            #Today and future journeys list
+            if ($today <= $journeyDate && ($row['isCancelled'] == '0')){
             ?>
-            </tr>
-        </table>
-    </div>
-</form>
+        </tr>
+        <tr>
+            <td><?php
+                $journeyId = $row['journeyId'];
+                echo $row['journeyId']; ?></td>
+            <td><?php echo $row['DeparturePlace']; ?></td>
+            <td><?php echo $row['DestinationPlace']; ?></td>
+            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php echo $row['journeyTime']; ?></td>
+            <td><?php echo $row['price']; ?></td>
+            <td><?php
+
+                $countTicket = "SELECT COUNT(*) AS totalTicket FROM ticket WHERE journeyId='$journeyId' AND !isCancelled='1'";
+                $countConnTicket = mysqli_query($conn, $countTicket);
+
+                $countReserve = "SELECT COUNT(*) AS totalReserve FROM reservation WHERE journeyId='$journeyId' AND !isCancelled='1'";
+                $countConnReserve = mysqli_query($conn, $countReserve);
+
+                if (!$countConnTicket && !$countConnReserve) {
+                    echo "Error";
+                } else {
+                    $countTicket = mysqli_fetch_array($countConnTicket);
+                    $countReserve = mysqli_fetch_array($countConnReserve);
+                    echo $countTicket['totalTicket'] + $countReserve['totalReserve'];
+                }
+                echo " / 24"; ?></td>
+
+
+            <td>
+                <?php echo "<form action='editJourney_A.php' method='POST'><button style='font-size: 16px; background-color: deepskyblue; width: 70%; border-radius: 20px'
+                                value=" . $row["journeyId"] . "  name='journeyId'>Edit</button></form>"
+                ?>
+            </td>
+
+            <td>
+                <button onclick="window.location.href='cancelJourney_A.php'" style="font-size: 16px; background-color: crimson; width: 70%; border-radius: 20px"
+                        name="cancel">Cancel</button>
+            </td>
+
+            <td>
+               <?php echo "<form action='detailsJourney_A.php' method='POST'><button  value=" . $row["journeyId"] . "  name='journeyId' style='font-size: 16px; background-color: forestgreen; width: 70%; border-radius: 20px '>Details</button></form>"
+            ?>
+            </td>
+        </tr>
+        <?php
+        }
+        }
+        }
+        }
+        ?>
+        </tr>
+    </table>
+</div>
+
 
 <footer class="main_footer">
     <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>

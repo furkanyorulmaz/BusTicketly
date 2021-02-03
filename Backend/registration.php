@@ -1,3 +1,15 @@
+<?php
+error_reporting(0);
+session_start();
+include("dbconnect.php");
+if (isset($_SESSION['email'])) {
+    echo '<script> 
+        if(confirm("You are already logged in ! \n Do you want to continue?")) {
+            window.location.href = "../BusTicketly/base/homepage_RU.php"
+         }</script>';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,15 +18,75 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 
     <title>REGISTRATION</title>
+
+    <style>
+        /* The container */
+        .cont {
+            display: inline-flex;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+
+        }
+
+        /* Hide the browser's default radio button */
+        .cont input {
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .check {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .cont:hover input ~ .check {
+            background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .cont input:checked ~ .check {
+            background-color: #2196F3;
+        }
+
+        input[type=tel]{
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: 3px solid #b7d7e8;
+            background: #f1f1f1;
+        }
+
+        input[type=tel]:focus{
+            background-color: #ddd;
+            outline: none;
+        }
+
+    </style>
+
 </head>
+
+
+
 <body>
+
+
 <!-- Navbar -->
 <div class="navbar">
 
     <!-- Left-aligned links (default) -->
     <a href="base/homepage_G.php">Homepage</a>
     <a href="base/aboutUs_G.php">About Us</a>
-    <a href="contactUs_G.php">Contact Us</a>
     <a href="base/support_G.php">Support</a>
 
     <!-- Right-aligned links -->
@@ -37,26 +109,47 @@
         <label><b>Surname</b></label>
         <input type="text" placeholder="Enter Surname" name="surname" required>
 
-        <label><b>Gender</b></label>
-        <input type="text" placeholder="Enter F for Female / M for Male" name="gender" required>
+        <label><b>Gender</b></label><br>
+
+        <label class="cont" for="male">Male
+            <input type="radio" id="male" name="gender" value="M" checked>
+            <span class="check"></span></label>
+
+        <label class="cont" for="female">Female
+            <input type="radio" id="female" name="gender" value="F">
+            <span class="check"></span></label><br>
 
         <label><b>Phone Number</b></label>
-        <input type="text" placeholder="5XX-XXX-XXXX" name="phone" required>
+        <input type="tel" id="phone" name="phone" placeholder="111-222-3344" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
 
         <label><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="email" required>
 
         <label><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" id="input1" placeholder="Enter Password" name="psw" required>
 
         <label><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <input type="password" id="input2" placeholder="Repeat Password" name="psw-repeat" required>
+
+        <input type="checkbox" onclick="myFunction()">Show Password
+        <br>
+        <script>
+            function myFunction() {
+                if ((document.getElementById("input1").type === "password") && (document.getElementById("input2").type === "password")) {
+                    document.getElementById("input1").type = "text";
+                    document.getElementById("input2").type = "text";
+                } else {
+                    document.getElementById("input1").type = "password";
+                    document.getElementById("input2").type = "password";
+                }
+            }
+        </script>
 
         <p>By creating an account you agree to our <a style="color:dodgerblue">Terms & Privacy</a>.</p>
 
         <div class="cancel_signup">
             <button type="button" class="cancelbtn"><a href="base/homepage_G.php">Cancel</a></button>
-            <button type="submit" class="signupbtn" name="signupbtn" onclick="geeks()">Register Now</a></button>
+            <button type="submit" class="signupbtn" name="signupbtn">Register Now</a></button>
         </div>
     </div>
 </form>
@@ -64,10 +157,6 @@
 </html>
 
 <?php
-error_reporting(0);
-session_start();
-#$conn = mysqli_connect("localhost", "root", "", "busdb");
-include("dbconnect.php");
 
 if (isset($_POST['signupbtn'])) {
     $name = $_POST['name'];
@@ -128,11 +217,7 @@ if (isset($_POST['signupbtn'])) {
                         mysqli_stmt_bind_param($stmt, "sssssss", $name, $surname, $gender, $email, $phone, $password_hash, $userType);
                         mysqli_stmt_execute($stmt);
 
-                        echo '   
-                        <script>
-                        if(confirm("You are registered, successfully.\nClick Ok for logging.")) {
-                        window.location.href = "../BusTicketly/login.php"
-                        }</script>';
+                        echo '<script>window.location.href = "../BusTicketly/login.php"</script>';
                         exit();
                     }
                 }

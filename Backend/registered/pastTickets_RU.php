@@ -33,21 +33,7 @@ $email = $_SESSION['email'];
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="registerUserProfile.php"><?php
-            $email = $_SESSION['email'];
-            $query = "SELECT * FROM users WHERE emailaddress='$email'";
-            if (isset($conn)) {
-                $queryConn = mysqli_query($conn, $query);
-
-                if (!$queryConn) {
-                    echo "Error";
-                } else {
-                    while ($row = mysqli_fetch_array($queryConn)) {
-                        $name = $row['userName'];
-                        echo " " . $name;
-                    }
-                }
-            } ?></a>
+        <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
         <a href="../logout.php">Logout</a>
     </div>
 
@@ -56,9 +42,9 @@ $email = $_SESSION['email'];
 <div class="container">
     <h1>View All Past Tickets</h1>
     <hr class="hr_main">
-    <table id="seats" style="width: 80%">
-        <h4 style="color: darkolivegreen">Buy Ticket Tables</h4>
+    <table id="seats" style="width: 75%">
         <tr style="color: darkred">
+            <th>Bus</th>
             <th>PNR</th>
             <th>From</th>
             <th>To</th>
@@ -69,19 +55,24 @@ $email = $_SESSION['email'];
             $query = "SELECT * FROM journey J, ticket T WHERE J.journeyId=T.journeyId AND T.emailaddress='$email' AND T.seatId ='0' ORDER BY J.journeyDate";
             if (isset($conn)) {
             $result = mysqli_query($conn, $query);
-
             if (mysqli_num_rows($result) == 0) {
                 echo '<style>p{color:red;}</style><p>Warning: Any ticket find !</p>';
             }
+
             while ($row = mysqli_fetch_array($result)) {
+
             if (($row['isCancelled'] == '0') && ($row['ticketType'] == 'PAST')) {
             ?>
         </tr>
         <tr>
+            <td><img src="../img/bus.png" width="50px" height="50px"></td>
             <td><?php echo $row['PNR']; ?></td>
             <td><?php echo $row['DeparturePlace']; ?></td>
             <td><?php echo $row['DestinationPlace']; ?></td>
-            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php
+                $originalDate = $row['journeyDate'];
+                $newDate = date("d-m-Y", strtotime($originalDate));
+                echo $newDate ?></td>
             <td><?php echo $row['journeyTime']; ?></td>
             <td><?php
                 if ($row['ticketType'] == 'Campaign') {
@@ -104,54 +95,8 @@ $email = $_SESSION['email'];
                     echo $price;
                 }
                 ?></td>
-            <td>
-                <?php
-                echo "<button type='submit' style=\"background-color: darkgray; width: 70%; color: black; font-weight: bolder; border-radius: 20px; font-size: 14px;\" disabled>Past Ticket</button>";
-                } ?>
-            </td>
             <?php
             }
-            ?>
-        </tr>
-
-    </table>
-    <br>
-    <hr>
-    <!-- Reserve Tickets -->
-    <table id="seats" style="width: 80%">
-        <tr style="color: darkred">
-            <h4 style="color: darkolivegreen">Reserved Ticket Tables</h4>
-            <th>PNR</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Price</th>
-
-            <?php
-            $query2 = "SELECT * FROM journey J, reservation R WHERE J.journeyId=R.journeyId AND R.seatId ='0' AND R.emailLUser='$email' ORDER BY J.journeyDate";
-            $result2 = mysqli_query($conn, $query2);
-            if (mysqli_num_rows($result2) == 0) {
-                echo '<style>p{color:red;}</style><p>Warning: Any ticket find !</p>';
-            }
-            while ($row2 = mysqli_fetch_array($result2)) {
-            if (($row2['isCancelled'] == '0') && ($row2['ticketType'] == 'PAST')) {
-            ?>
-        </tr>
-        <tr>
-            <td><?php echo $row2['reservationId']; ?></td>
-            <td><?php echo $row2['DeparturePlace']; ?></td>
-            <td><?php echo $row2['DestinationPlace']; ?></td>
-            <td><?php echo $row2['journeyDate']; ?></td>
-            <td><?php echo $row2['journeyTime']; ?></td>
-            <td><?php echo $row2['price']; ?></td>
-            <td>
-                <?php
-                echo "<button type='submit' style=\"background-color: darkgray; width: 70%; color: black; font-weight: bolder; border-radius: 20px; font-size: 14px;\" disabled>Past Ticket</button>";
-                }
-                ?>
-            </td>
-            <?php
             }
             }
             }
@@ -159,6 +104,7 @@ $email = $_SESSION['email'];
         </tr>
 
     </table>
+    <br>
 </div>
 
 

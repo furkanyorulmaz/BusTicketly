@@ -18,6 +18,39 @@ if (!isset($_SESSION['email'])) {
         <link rel="stylesheet" type="text/css" href="../main.css">
 
         <title>EDIT JOURNEY</title>
+
+        <style>
+
+            input[type=time] {
+                width: 100%;
+                padding: 13px;
+                margin: 5px 0 22px 0;
+                display: inline-block;
+                border: 3px solid #b7d7e8;
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            input[type=time]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+            #date {
+                width: 100%;
+                padding: 24px;
+                margin: 5px 0 22px 0;
+                display: inline-block;
+                border: 3px solid #b7d7e8;
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            #date:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+        </style>
     </head>
     <body>
     <!-- Navbar -->
@@ -31,18 +64,11 @@ if (!isset($_SESSION['email'])) {
 
     </div>
 
-    <div class="search-container">
-        <h1>Search Journey</h1>
-        <form action="" method="POST">
-            <input style="width: 50%" type="text" placeholder="Enter Journey ID: " name="journey_id">
-            <button style="margin-right: 28%" type="submit" class="addjourneybtn" name="find_journey">Find Journey
-            </button>
-        </form>
-    </div>
 
     <?php
-    if (isset($_POST['find_journey'])){
-    $id = $_POST['journey_id'];
+    if (isset($_POST['journeyId'])){
+    $id = $_POST['journeyId'];
+    $_SESSION['journeyId'] = $_POST['journeyId'];
 
     $editJourney = "SELECT * FROM journey WHERE journeyId='$id'";
     if (isset($conn)) {
@@ -66,9 +92,6 @@ if (!isset($_SESSION['email'])) {
             <h1>Edit Journey</h1>
             <hr class="hr_main">
 
-            <label><b>Id</b></label>
-            <input type="text" placeholder="<?php echo "" . $id ?>" name="id" required>
-
             <label><b>From</b></label>
             <input type="text" placeholder="<?php echo "" . $from ?>" name="from" disabled>
 
@@ -77,11 +100,15 @@ if (!isset($_SESSION['email'])) {
 
             <label><b>Date</b></label>
             <br>
-            <input type="text" placeholder="<?php echo "" . $date ?>" name="date" required>
-
+            <input type="date" id="date" placeholder="<?php echo "" . $date ?>" name="date" required>
+            <script>
+                var today = new Date().toISOString().split('T')[0];
+                document.getElementsByName("date")[0].setAttribute('min', today);
+            </script>
             <label><b>Time</b></label>
-            <input type="text" placeholder="<?php echo "" . $time ?>" name="time" required>
+            <input type="time" placeholder="<?php echo "" . $time ?>" name="time" required>
             <br>
+
             <label><b>Price</b></label>
             <input type="text" placeholder="<?php echo "" . $price ?>" name="price" required>
             <br>
@@ -95,8 +122,6 @@ if (!isset($_SESSION['email'])) {
         ?>
     </form>
 
-
-    <br><br><br><br><br>
     <footer class="main_footer">
         <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
     </footer>
@@ -106,7 +131,7 @@ if (!isset($_SESSION['email'])) {
 
 <?php
 if (isset($_POST['add_journey'])) {
-    $id = $_POST['id'];
+    $id = $_SESSION['journeyId'];
     $date = $_POST['date'];
     $time = $_POST['time'];
     $price = $_POST['price'];
@@ -117,17 +142,36 @@ if (isset($_POST['add_journey'])) {
 
         if (!$result) {
             #echo "SQL error, check your query";
-            echo '<script> 
+           echo '<script>
                      if(confirm("Journey is not edit !")) {
                                window.location.href = "adminProfile.php"
               }</script>';
             exit();
         } else {
             #echo "Journey edited successfully";
-            echo '<script> 
-                     if(confirm("Journey edited, successfully.")) {
-                               window.location.href = "adminProfile.php"
-              }</script>';
+
+            echo '    <div id="id01" style=" 
+            position: fixed; 
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            padding-top: 50px;
+            background-color: rgb(0, 0, 0); 
+            background-color: rgba(0, 0, 0, 0.4); "> 
+        <form style=" background-color: #87bdd8;
+            margin: 5% auto 15% auto; 
+            border: 1px solid #888;
+            width: 50%; ">
+            <div style=" padding: 60px; text-align: center;">
+                <h1 style="color: blanchedalmond">Journey edited, successfully.</h1>
+                <p>Do you want to continue ?</p>
+		        <button class="adminSignbtn" style="width: 10%; background-color: #ff7733 " type="submit"><a href="adminProfile.php">OK</a></button>
+            </div>
+        </form>
+    </div>';
             exit();
         }
     }

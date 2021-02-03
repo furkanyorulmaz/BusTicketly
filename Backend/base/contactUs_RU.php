@@ -1,6 +1,5 @@
 <?php
 session_start();
-#$conn = mysqli_connect("localhost", "root", "", "busdb");
 include("../dbconnect.php");
 
 if (!isset($_SESSION['email'])) {
@@ -32,7 +31,22 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="../registered/registerUserProfile.php">My Profile</a>
+        <img src="../img/bus_icon.png" style="float: left; margin-top: 8px">
+        <a href="../registered/registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn){
+                    echo "Error";
+                }else{
+                    while($row = mysqli_fetch_array($queryConn)){
+                        $name = $row['userName'];
+                        echo "Hi! ".$name;
+                    }
+                }
+            } ?></a>
         <a href="../logout.php">Logout</a>
     </div>
 </div>
@@ -44,9 +58,6 @@ if (!isset($_SESSION['email'])) {
     </div>
     <div class="row">
         <form action="#" method="POST">
-
-           <!-- <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Enter email..." required>-->
 
             <label for="subject">Subject</label>
             <input type="text" id="subject" name="subject" placeholder="What you want mentione ?" required>
@@ -80,12 +91,10 @@ if (isset($_POST['send_contact'])) {
     $message = $_POST['message'];
 
     #int random number generator
-    $feedbackId = rand(100, 999);
+    $feedbackId = rand(1000000, 9999999);
     $feedbacks = "INSERT INTO comments(feedbackId,subject,message,email) VALUES ('$feedbackId','$subject','$message','$mailForm')";
     if (isset($conn)) {
         $result = mysqli_query($conn, $feedbacks);
-
-        #echo "" . $mailForm . "\n" . $subject . "\n" . $message . "\n";
         if (!$result) {
             #echo "Error, check your code !!!";
             echo '<script> 

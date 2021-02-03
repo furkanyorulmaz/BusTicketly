@@ -32,7 +32,22 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="../registered/registerUserProfile.php">My Profile</a>
+        <img src="../img/bus_icon.png" style="float: left; margin-top: 8px">
+        <a href="../registered/registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn){
+                    echo "Error";
+                }else{
+                    while($row = mysqli_fetch_array($queryConn)){
+                        $name = $row['userName'];
+                        echo "Hi! ".$name;
+                    }
+                }
+            } ?></a>
         <a href="../logout.php">Logout</a>
     </div>
 

@@ -495,7 +495,7 @@ button:hover {
 }
 
 .returnbtn {
-    background-color: darkgreen;
+    background-color: #4CAF50;
 }
 
 .nextbtn {
@@ -512,7 +512,16 @@ button:hover {
     }
 }
 
-.ticket_transactions_btn, .transactions_admin_btn {
+.ticket_transactions_btn {
+    padding: 14px 20px;
+    margin: 14px 12px;
+    background-color: dodgerblue;
+    float: left;
+    text-align: center;
+    border-radius: 30px;
+}
+
+.transactions_admin_btn {
     padding: 14px 20px;
     margin: 14px 12px;
     background-color: dodgerblue;
@@ -526,7 +535,7 @@ button:hover {
 }
 
 .transactions_admin_btn {
-    width: 26%;
+    width: 22%;
 }
 
 .findjourneybtn {
@@ -617,3 +626,41 @@ button:hover {
 }
 
 /******************SEAT PLAN CSS*****************/
+
+/* The container */
+.conSeat {
+    display: inline-flex;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+
+}
+
+/* Hide the browser's default radio button */
+.conSeat input {
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkSeat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.conSeat:hover input ~ .checkSeat {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.conSeat input:checked ~ .checkSeat {
+    background-color: #2196F3;
+}

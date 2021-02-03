@@ -33,7 +33,7 @@ if (!isset($_SESSION['email'])) {
 </div>
 
 <div class="container">
-    <h1>Officer Transactions</h1>
+    <h1>Officer Transactions <img src="../img/admin.png"></h1>
     <hr class="hr_main">
     <button type="submit" class="transactions_admin_btn"><a href="feedbacksToA_O.php">Send Feedbacks To Admin</a></button>
     <button type="submit" class="transactions_admin_btn"><a href="allFeedbacks_O.php">List All Comments</a></button>

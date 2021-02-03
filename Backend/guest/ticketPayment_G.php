@@ -1,12 +1,13 @@
 <?php
 session_start();
 include("../dbconnect.php");
+
 if (isset($_SESSION)) {
+    $number = $_SESSION['number'];
     $journeyId = $_SESSION['journeyId'];
-    $PNR = $_SESSION['PNR'];
+    #$seats = $_SESSION['seats'];
+
     ?>
-
-
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -55,9 +56,23 @@ if (isset($_SESSION)) {
                 color: #f1f1f1;
             }
 
+            input[type=tel] {
+                width: 20%;
+                padding: 15px;
+                margin: 5px 0 22px 0;
+                display: inline-block;
+                border: 2.5px solid #b7d7e8;
+                background: #f1f1f1;
+            }
+
+            input[type=tel]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
         </style>
     </head>
-    <body>
+<body>
 
 
     <div class="navbar">
@@ -88,28 +103,11 @@ if (isset($_SESSION)) {
 
     </div>
 
-    <div class="container">
-        <h1>Ticket Payment For Buying</h1>
-        <hr class="hr_main">
-        <form action="#" method="POST">
-            <label>Credit Card Number :</label>
-            <input style="width: 30%" type="text" placeholder="Enter CC Number" name="CCNumber" id="CCNumber" required
-                   minlength="5" maxlength="15">
-            <button style="width: 10%" type="submit" name="paymentbutton" class="CCNumbers"><a>Apply</a></button>
-        </form>
-    </div>
-
-    <footer class="main_footer">
-        <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
-    </footer>
-
-    </body>
-    </html>
-
+<div class="container">
+    <h1>Ticket Payment</h1>
+    <hr class="hr_main">
     <?php
-
     $query2 = "SELECT * FROM journey WHERE journeyId='$journeyId'";
-
     if (isset($conn)) {
         $output2 = mysqli_query($conn, $query2);
 
@@ -118,9 +116,32 @@ if (isset($_SESSION)) {
         } else {
             while ($row2 = mysqli_fetch_array($output2)) {
                 $price = $row2['price'];
+                $newPrice = $price * $number;
+                echo "<h4>Total Amount For Payment: " . $newPrice;
+                ?>
+
+                <form action="#" method="POST">
+                    <br>
+                    <label>Credit Card Number :</label>
+                    <input style="width: 30%" type="tel" pattern="[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}"
+                           placeholder="Enter CC Number" name="CCNumber" id="CCNumber" required>
+                    <button style="width: 10%" type="submit" name="paymentbutton" class="CCNumbers">Pay</button>
+                </form>
+                </div>
+
+                <footer class="main_footer">
+                    <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
+                </footer>
+
+                </body>
+                </html>
+
+                <?php
+
 
                 if (isset($_POST['paymentbutton'])) {
                     $CCNumber = $_POST['CCNumber'];
+
                     $ccn = "SELECT * FROM payment WHERE CCNumber='$CCNumber'";
                     $res = mysqli_query($conn, $ccn);
                     if (!$res) {
@@ -133,7 +154,7 @@ if (isset($_SESSION)) {
                     } else {
                         while ($row3 = mysqli_fetch_array($res)) {
                             $balance = $row3['balance'];
-                            if ($row3['balance'] < $price) {
+                            if ($row3['balance'] < $newPrice) {
                                 #echo "Your balance have not enough money!";
                                 echo '<script> 
                                         if(confirm("Your balance have not enough money !\nDo you want to continue?")) {
@@ -141,7 +162,7 @@ if (isset($_SESSION)) {
                                       }</script>';
                                 exit();
                             } else {
-                                $balance -= $price;
+                                $balance -= $newPrice;
                                 $balanceUpdate = "UPDATE payment SET balance='$balance' WHERE CCNumber='$CCNumber'";
                                 $output3 = mysqli_query($conn, $balanceUpdate);
                                 if (!$output3) {
@@ -152,10 +173,12 @@ if (isset($_SESSION)) {
                                     exit();
                                 } else {
                                     #echo "Payment Finished";
-                                    echo '<script> 
-                                        if(confirm("Your ticket purchase completed, successfully.\nDo you want to continue?")) {
-                                            window.location.href = "finishedBuyTicket_G.php"
-                                      }</script>';
+                                    $_SESSION['journeyId'] = $journeyId;
+                                    $_SESSION['number'] = $number;
+                                    $seats = $_SESSION['seats'];
+                                    $_SESSION['seats'] = $seats;
+                                    header("Location: finishSuccess.php");
+                                    #echo '<script> window.location.href = "finishedBuyTicket_G.php"</script>';
                                     exit();
                                 }
                             }

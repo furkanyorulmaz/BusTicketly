@@ -2,9 +2,9 @@
 session_start();
 include("../dbconnect.php");
 
-if (isset($_SESSION)) {
-$PNR = $_SESSION['PNR'];
-$journeyId = $_SESSION['journeyId'];
+if (isset($_POST['journeyId'])) {
+$journeyId = $_POST['journeyId'];
+$_SESSION['journeyId'] = $journeyId;
 
 $query = "SELECT * FROM journey WHERE journeyId='$journeyId';";
 
@@ -134,14 +134,21 @@ if (!$result) {
 
 </div>
 
-<form action="#" method="POST">
+<form action="guestBuyInfo_G.php" method="POST">
     <div class="container">
+        <div style="margin-top: -30px; width: 30%;">
+            <label for="from">Select Number of Tickets: </label>
+            <select id="number" style="background-color:lightgray; color:darkblue; width:20% " name="number">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <br>
         <h1>Choose Seat Number</h1>
         <hr class="hr_main">
-        <h3>You can only choose one ticket</h3>
-        <hr>
         <?php
-
         while ($row = mysqli_fetch_array($result)) {
 
             for ($i = 1; $i <= 24; $i++) {
@@ -156,51 +163,34 @@ if (!$result) {
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
-                            <input type="checkbox" value="' . $i . '" name="seat" checked="checked" disabled="disabled">
+                            <input type="checkbox" value="' . $i . '" name="seats[]" checked="checked" disabled="disabled">
                             <span class="checkmark"></span>
                         </label>
                     </div>';
+
 
                 } else {
 
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
-                            <input type="checkbox" value="' . $i . '" name="seat">
+                            <input type="checkbox" value="' . $i . '" name="seats[]">
                             <span class="checkmark"></span>
                         </label>
                     </div>';
                 }
             }
         }
-
-        if (isset($_POST['choose_seat'])) {
-            $seatId = $_POST['seat'];
-            $seatAdd = "UPDATE ticket SET seatId='$seatId' WHERE PNR='$PNR'";
-            $output = mysqli_query($conn, $seatAdd);
-            if (!$output) {
-                #echo "Error";
-                echo '<script language="javascript">';
-                echo "alert('Something wrong.')";
-                echo '</script>';
-                exit();
-            } else {
-                $PNR = $_SESSION['PNR'];
-                $journeyId = $_SESSION['journeyId'];
-                echo '<script>window.location.href = "ticketPayment_G.php"</script>';
-                exit();
-            }
-        }
         }
         }
         }
         ?>
-        <br><br><br><br><br>
         <br><br><br><br>
+        <br><br><br><br><br>
         <div class="cancel_signup">
 
             <label class="container_box">
-                <input type="checkbox"  disabled>
+                <input type="checkbox" disabled>
                 <span class="checkmark"></span>
                 Empty Seat
             </label>
@@ -211,15 +201,23 @@ if (!$result) {
                 Full Seat
             </label>
 
-            <button type="button" class="returnbtn" style="background-color: darkslategray"><a
-                        href="listOfJourneys_G.php">Return</a></button>
+            <button type="button" onClick="window.location.href = 'listOfJourneys_G.php'" class="returnbtn" style="background-color: darkslategray">Return</button>
             <button type="submit" class="nextbtn" style="background-color: cornflowerblue" name="choose_seat">Next
             </button>
+
         </div>
     </div>
 </form>
+<?php
+/*if (isset($_POST['choose_seat'])) {
+    $number = $_POST['number'];
+    $_SESSION['number'] = $number;
+    $journeyId = $_SESSION['journeyId'];
 
-<br>
+    #echo '<script> window.location.href = "guestBuyInfo_G.php"</script>';
+}*/
+
+?>
 <footer class="main_footer">
     <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>
 </footer>

@@ -33,7 +33,7 @@ if (!isset($_SESSION['email'])) {
     <h1>Cancel Ticket</h1>
     <hr class="hr_main">
     <form action="#" method="POST">
-        <input style="width: 30%" type="text" placeholder="Enter PNR & Ticket ID:" name="pnr">
+        <input style="width: 30%" type="text" placeholder="Enter PNR & Ticket ID:" pattern="[0-9]{8}" name="pnr">
         <button type="submit" class="canceljourney_tiketbtn" name="cancelTicket">Cancel Ticket</button>
     </form>
 </div>
@@ -86,7 +86,7 @@ if (isset($_POST['cancelTicket'])) {
                             $result = mysqli_query($conn, $deleteTicket);
 
                             #return money back to user
-                            $getCCN = "SELECT * FROM payment WHERE CCNumber='1122334455'";
+                            $getCCN = "SELECT * FROM payment WHERE CCNumber='1111222233334444'";
                             $resultCCN = mysqli_query($conn, $getCCN);
 
                             if (!$resultCCN) {
@@ -100,13 +100,31 @@ if (isset($_POST['cancelTicket'])) {
                                     $balance = $row3['balance'];
                                     $balance -= $price;
 
-                                    $cancelTicket = "UPDATE payment SET balance='$balance' WHERE CCNumber='1122334455'";
+                                    $cancelTicket = "UPDATE payment SET balance='$balance' WHERE CCNumber='1111222233334444'";
                                     $result4 = mysqli_query($conn, $cancelTicket);
 
-                                    echo '<script>
-                                    if(confirm("Your ticket canceled, successfully.\nDo you want to continue?")) {
-                                        window.location.href = "../admin/adminProfile.php"
-                                     }</script>';
+                                    echo '    <div id="id01" style=" 
+                                                position: fixed; 
+                                                z-index: 1;
+                                                left: 0;
+                                                top: 0;
+                                                width: 100%; 
+                                                height: 100%; 
+                                                overflow: auto; 
+                                                padding-top: 50px;
+                                                background-color: rgb(0, 0, 0); 
+                                                background-color: rgba(0, 0, 0, 0.4); "> 
+                                            <form style=" background-color: #87bdd8;
+                                                margin: 5% auto 15% auto; 
+                                                border: 1px solid #888;
+                                                width: 50%; ">
+                                                <div style=" padding: 60px; text-align: center;">
+                                                    <h1 style="color: blanchedalmond">Ticket canceled, successfully.</h1>
+                                                    <p>Do you want to continue ?</p>
+                                                    <button class="adminSignbtn" style="width: 10%; background-color: #ff7733 " type="submit"><a href="adminProfile.php">OK</a></button>
+                                                </div>
+                                            </form>
+                                        </div>';
                                     exit();
                                 }
                             }

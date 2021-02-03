@@ -28,31 +28,17 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="registerUserProfile.php"><?php
-            $email = $_SESSION['email'];
-            $query = "SELECT * FROM users WHERE emailaddress='$email'";
-            if (isset($conn)) {
-                $queryConn = mysqli_query($conn, $query);
-
-                if (!$queryConn){
-                    echo "Error";
-                }else{
-                    while($row = mysqli_fetch_array($queryConn)){
-                        $name = $row['userName'];
-                        echo " ".$name;
-                    }
-                }
-            } ?></a>
+        <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
         <a href="../logout.php">Logout</a>
     </div>
 </div>
 
 <div class="container">
-    <h1>Reserve Ticket Cancel</h1>
+    <h1>Reserved Ticket Cancel</h1>
     <hr class="hr_main">
     <form action="#" method="POST">
         <label>Enter PNR for canceling:</label>
-        <input style="width: 30%" type="text" placeholder="Enter PNR number" name="pnr">
+        <input style="width: 30%" type="text" placeholder="Enter PNR number" pattern="[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}" name="pnr">
 
         <br>
         <label>Enter CCN for canceling:</label>

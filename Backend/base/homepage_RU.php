@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+#$conn = mysqli_connect("localhost", "root", "", "busdb");
 include("../dbconnect.php");
 
 if (!isset($_SESSION['email'])) {
@@ -29,10 +29,27 @@ if (!isset($_SESSION['email'])) {
     <a href="contactUs_RU.php">Contact Us</a>
     <a href="support_RU.php">Support</a>
 
+
+
     <!-- Right-aligned links -->
     <div class="navbar-right">
+        <img src="../img/bus_icon.png" style="float: left; margin-top: 8px">
         <a href="../registered/registerUserProfile.php">
-            <?php echo "Hi! " . $_SESSION['email']; ?>
+            <?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn){
+                    echo "Error";
+                }else{
+                    while($row = mysqli_fetch_array($queryConn)){
+                        $name = $row['userName'];
+                        echo "Hi! ".$name;
+                    }
+                }
+            } ?>
         </a>
         <a href="../logout.php">Logout</a>
     </div>
@@ -41,6 +58,7 @@ if (!isset($_SESSION['email'])) {
 <div class="big-image">
     <div id="list_journey">
         <form action="../registered/listOfJourneys_RU.php" method="POST" name="journeys">
+
             <label for="from">From</label>
             <select id="from" name="from">
                 <option value="İstanbul">İstanbul</option>
@@ -68,22 +86,17 @@ if (!isset($_SESSION['email'])) {
 
             <label for="date">Date</label>
             <br>
-            <input type="date" id="date" name="date">
+            <input type="date" id="date" name="date" >
             <!-- disable script for past dates -->
             <script>
                 var today = new Date().toISOString().split('T')[0];
                 document.getElementsByName("date")[0].setAttribute('min', today);
             </script>
             <br>
-            <button type="submit" class="listbtn" name="submit_registered">List Journeys</a></button>
+            <button type="submit" class="listbtn" name="submit_registered">List Journeys</button>
         </form>
     </div>
 </div>
-
-<form action="../registered/viewTicketDetail_RU.php" method="POST">
-    <input type="text" id="pnrinput" placeholder="Enter reserved ticket pnr number:" name="pnr">
-    <button type="submit" class="pnrbtn" name="find_ticket">Find Ticket</button>
-</form>
 
 <h5 class="h5_class">MOST TRAVELED CITIES</h5>
 <div id="box_mostTraveledCities">

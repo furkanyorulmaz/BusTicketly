@@ -70,6 +70,7 @@
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+        <img src="../img/bus_icon.png" style="float: left; margin-top: 8px">
         <a href="../login.php">Login</a>
         <a href="../registration.php">Registration</a>
     </div>

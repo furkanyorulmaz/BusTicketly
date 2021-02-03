@@ -37,21 +37,7 @@ if (isset($_POST['submit_registered'])) {
 
         <!-- Right-aligned links -->
         <div class="navbar-right">
-            <a href="registerUserProfile.php"><?php
-                $email = $_SESSION['email'];
-                $query = "SELECT * FROM users WHERE emailaddress='$email'";
-                if (isset($conn)) {
-                    $queryConn = mysqli_query($conn, $query);
-
-                    if (!$queryConn){
-                        echo "Error";
-                    }else{
-                        while($row = mysqli_fetch_array($queryConn)){
-                            $name = $row['userName'];
-                            echo " ".$name;
-                        }
-                    }
-                } ?></a>
+            <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
             <a href="../logout.php">Logout</a>
         </div>
     </div>
@@ -61,7 +47,7 @@ if (isset($_POST['submit_registered'])) {
     <hr class="hr_main">
     <table id="seats" style="width: 85%">
     <tr style="color: darkred">
-
+    <th>Bus</th>
     <th>From</th>
     <th>To</th>
     <th>Date</th>
@@ -69,7 +55,6 @@ if (isset($_POST['submit_registered'])) {
     <th>Price</th>
     <th>Buy Ticket Action</th>
     <th>Reserve Ticket Action</th>
-    <!-- Burası Biletlerin listelenmeye basladıgı yer -->
     <?php
     $query = "SELECT * FROM journey WHERE DeparturePlace='$from' AND DestinationPlace='$to' AND journeyDate='$date' ORDER BY journeyDate";
     if (isset($conn)) {
@@ -84,6 +69,19 @@ if (isset($_POST['submit_registered'])) {
         }
 
         while ($row = mysqli_fetch_array($result)) {
+
+            $today = strtotime("today");
+            $journeyDate = $row['journeyDate'];
+            $journeyDate = strtotime($journeyDate);
+
+            if($today == $journeyDate){
+                echo '<script> 
+                          if(confirm("We can not view journeys. Choose an other date!")) {
+                                window.location.href = "../base/homepage_RU.php"
+                      }</script>';
+                exit();
+            }
+
             if ($row['isCancelled'] == '1') {
                 echo '<script> 
                           if(confirm("We can not find any journey. Choose an other date!")) {
@@ -93,13 +91,17 @@ if (isset($_POST['submit_registered'])) {
             }
             ?>
             <tr>
+                <td><img src="../img/bus.png" width="50px" height="50px"></td>
                 <td><?php echo $row['DeparturePlace']; ?></td>
                 <td><?php echo $row['DestinationPlace']; ?></td>
-                <td><?php echo $row['journeyDate']; ?></td>
+                <td><?php
+                    $originalDate = $row['journeyDate'];
+                    $newDate = date("d-m-Y", strtotime($originalDate));
+                    echo $newDate  ?></td>
                 <td><?php echo $row['journeyTime']; ?></td>
                 <td><?php echo $row['price']; ?></td>
                 <td>
-                    <?php echo "<form action='registeredBuyInfo.php' method='post'><button value =" . $row['journeyId'] . " name=\"journeyId\" style=\"background-color: darkgreen; width: 70%; border-radius: 20px\">Buy Ticket</button></form>";
+                    <?php echo "<form action='chooseSeatNoBuy_RU.php' method='post'><button value =" . $row['journeyId'] . " name=\"journeyId\" style=\"background-color: darkgreen; width: 70%; border-radius: 20px\">Buy Ticket</button></form>";
                     ?>
                 </td>
                 <td>
@@ -148,11 +150,8 @@ if (isset($_POST['journeyId'])) {
                 $diff = ($end_date - $start_date);
                 $day = ($diff) / 60 / 60 / 24;
                 if ($day >= 3) {
-                    echo '<script>
-                    if(confirm("Ticket can reserve.\n Do you want to continue?")) {
-                        window.location.href = "registeredReserveInfo.php"
-                    }</script>';
-
+                    $_SESSION['journeyId'] = $journeyId;
+                    header("Location: ../registered/chooseSeatNoReserve_RU.php");
                     exit();
                 } else {
                     echo '<script>

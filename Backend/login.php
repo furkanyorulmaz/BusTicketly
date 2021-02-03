@@ -1,11 +1,10 @@
 <?php
 session_start();
-#$conn = mysqli_connect("localhost", "root", "", "busdb");
 include("dbconnect.php");
 if (isset($_SESSION['email'])) {
     echo '<script> 
         if(confirm("You are already logged in ! \n Do you want to continue?")) {
-            window.location.href = "../BusTicketly/base/homepage_RU.php"
+            window.location.href = "../BusTicketly/login.php"
          }</script>';
     exit();
 }
@@ -17,6 +16,7 @@ if (isset($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maxmum-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <title>LOGIN PAGE</title>
 </head>
 <body>
 <!-- Navbar -->
@@ -25,7 +25,6 @@ if (isset($_SESSION['email'])) {
     <!-- Left-aligned links (default) -->
     <a href="base/homepage_G.php">Homepage</a>
     <a href="base/aboutUs_G.php">About Us</a>
-    <a href="contactUs_G.html">Contact Us</a>
     <a href="base/support_G.php">Support</a>
 
 
@@ -62,11 +61,11 @@ if (isset($_SESSION['email'])) {
                 }
             }
         </script>
-        <span style="margin-left: 60%">Forgot password?<a href="changePassword.php" style="color: dodgerblue"> Click Here !</a></span>
+        <span style="margin-left: 60%">Forgot password?<a href="forgotPassword.php" style="color: dodgerblue"> Click Here !</a></span>
         <br>
         <br>
         <div class="cancel_signup">
-            <button type="button" class="cancelbtn"><a href="base/homepage_G.php">Cancel</a></button>
+            <button type="button" class="cancelbtn"><a href="registration.php">Registration</a></button>
             <button type="submit" class="signupbtn" name="login_user">Login</a></button>
         </div>
     </div>
@@ -80,10 +79,6 @@ if (isset($_POST['login_user'])) {
 
     $email = $_POST['email'];
     $psw = $_POST['psw'];
-
-    #$psw = password_hash($psw, PASSWORD_DEFAULT);
-
-
 
     if (empty($email) || empty($psw)) {
         echo '<script>
@@ -114,6 +109,19 @@ if (isset($_POST['login_user'])) {
             $result = mysqli_stmt_get_result($stmt);
 
             if ($row = mysqli_fetch_assoc($result)) {
+
+                if($row['userType'] == 'Admin') {
+                    $_SESSION['email'] = $row['emailaddress'];
+                    echo '<script>window.location.href = "../BusTicketly/admin/adminProfile.php"</script>';
+                    exit();
+                }
+
+                if($row['userType'] == 'Officer') {
+                    $_SESSION['email'] = $row['emailaddress'];
+                    echo '<script>window.location.href = "../BusTicketly/officer/officerProfile.php"</script>';
+                    exit();
+                }
+
                 $pwdCheck = password_verify($psw, $row['pwd']);
                 if ($pwdCheck == false) {
                     echo '<script>
@@ -123,7 +131,6 @@ if (isset($_POST['login_user'])) {
                     exit();
 
                 } else if ($pwdCheck == true) {
-                    session_start();
                     $_SESSION['email'] = $row['emailaddress'];
                     header("Location: ../BusTicketly/base/homepage_RU.php");
                     exit();

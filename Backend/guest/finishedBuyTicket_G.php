@@ -5,7 +5,9 @@ include("../dbconnect.php");
 if (isset($_SESSION)) {
 
 $journeyId = $_SESSION['journeyId'];
-$PNR = $_SESSION['PNR'];
+$number = $_SESSION['number'];
+$seats = $_SESSION['seats'];
+$arrayPNR = $_SESSION['arrayPNR'];
 
 ?>
 <!DOCTYPE html>
@@ -90,8 +92,10 @@ $PNR = $_SESSION['PNR'];
 <div class="container">
     <h1>Buy Ticket Detail</h1>
     <hr class="hr_main">
+
     <table id="seats" style="width: 85%">
         <tr style="color: darkred">
+
             <th>PNR</th>
             <th>From</th>
             <th>To</th>
@@ -102,43 +106,38 @@ $PNR = $_SESSION['PNR'];
             <th>Ticket Action</th>
 
             <?php
-            #WHERE reservatioId='$reservedId'#
+            for ($k = 0; $k < $number; $k++){
+
             $query = "SELECT * FROM journey WHERE journeyId='$journeyId'";
 
             if (isset($conn)) {
             $result = mysqli_query($conn, $query);
-
-
             while ($row = mysqli_fetch_array($result)) {
             ?>
         </tr>
         <tr>
-            <td><?php echo $PNR; ?></td>
+            <td><?php echo $arrayPNR[$k]; ?></td>
             <td><?php echo $row['DeparturePlace']; ?></td>
             <td><?php echo $row['DestinationPlace']; ?></td>
-            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php
+                $originalDate = $row['journeyDate'];
+                $newDate = date("d-m-Y", strtotime($originalDate));
+                echo $newDate  ?></td>
             <td><?php echo $row['journeyTime']; ?></td>
             <td><?php echo $row['price']; ?> TL</td>
+            <td><?php echo $seats[$k]; ?></td>
             <td>
-                <?php
-                $query2 = "SELECT * FROM ticket WHERE journeyId='$journeyId' AND PNR='$PNR'";
-                $result2 = mysqli_query($conn, $query2);
-                while ($row2 = mysqli_fetch_array($result2)) {
-                    echo $row2['seatId'];
-                }
-                ?>
-            </td>
-            <td>
-                <?php echo "<button type='submit' style=\"background-color: crimson; width: 80%; border-radius: 20px\"><a href='ticketCanceledBy_G.php'>Cancel Ticket</a></button>"; ?>
+                <?php echo "<button type='submit'  style=\"background-color: crimson; width: 80%; border-radius: 20px\" onclick=\"window.location.href='../guest/ticketCanceledBy_G.php'\">Cancel Ticket</button>"; ?>
             </td>
         </tr>
+
         <?php
         }
         }
         }
         ?>
         </tr>
-    </table>
+    </table><?php } ?>
 </div>
 
 

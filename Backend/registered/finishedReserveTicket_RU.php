@@ -10,8 +10,12 @@ if (!isset($_SESSION['email'])) {
 }
 
 if (isset($_SESSION)) {
+
 $journeyId = $_SESSION['journeyId'];
-$reservationId = $_SESSION['reservationId'];
+$number = $_SESSION['number'];
+$seats = $_SESSION['seats'];
+$arrayPNR = $_SESSION['arrayPNR'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +23,7 @@ $reservationId = $_SESSION['reservationId'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maxmum-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="../main.css">
-    <title>FINISHED RESERVE TICKET RU</title>
+    <title>FINISHED BUY TICKET RU</title>
 </head>
 <body>
 <!-- Navbar -->
@@ -33,30 +37,19 @@ $reservationId = $_SESSION['reservationId'];
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="registerUserProfile.php"><?php
-            $email = $_SESSION['email'];
-            $query = "SELECT * FROM users WHERE emailaddress='$email'";
-            if (isset($conn)) {
-                $queryConn = mysqli_query($conn, $query);
-
-                if (!$queryConn){
-                    echo "Error";
-                }else{
-                    while($row = mysqli_fetch_array($queryConn)){
-                        $name = $row['userName'];
-                        echo " ".$name;
-                    }
-                }
-            } ?></a>
+        <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
         <a href="../logout.php">Logout</a>
     </div>
+
 </div>
 
 <div class="container">
-    <h1>Reserved Ticket Detail</h1>
+    <h1>Reserve Ticket Detail</h1>
     <hr class="hr_main">
+
     <table id="seats" style="width: 85%">
         <tr style="color: darkred">
+
             <th>PNR</th>
             <th>From</th>
             <th>To</th>
@@ -64,44 +57,41 @@ $reservationId = $_SESSION['reservationId'];
             <th>Time</th>
             <th>Price</th>
             <th>SeatNo</th>
-            <th>Cancel Ticket Action</th>
+            <th>Ticket Action</th>
 
             <?php
+            for ($k = 0; $k < $number; $k++){
+
             $query = "SELECT * FROM journey WHERE journeyId='$journeyId'";
+
             if (isset($conn)) {
             $result = mysqli_query($conn, $query);
-
             while ($row = mysqli_fetch_array($result)) {
             ?>
+        </tr>
         <tr>
-            <td><?php echo $reservationId; ?> </td>
+            <td><?php echo $arrayPNR[$k]; ?></td>
             <td><?php echo $row['DeparturePlace']; ?></td>
             <td><?php echo $row['DestinationPlace']; ?></td>
-            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php
+                $originalDate = $row['journeyDate'];
+                $newDate = date("d-m-Y", strtotime($originalDate));
+                echo $newDate  ?></td>
             <td><?php echo $row['journeyTime']; ?></td>
             <td><?php echo $row['price']; ?> TL</td>
+            <td><?php echo $seats[$k]; ?></td>
             <td>
-                <?php
-                $query2 = "SELECT * FROM reservation WHERE journeyId='$journeyId' AND reservationId='$reservationId'";
-                $result2 = mysqli_query($conn, $query2);
-                while ($row2 = mysqli_fetch_array($result2)) {
-                    echo $row2['seatId'];
-                }
-                ?>
-            </td>
-            <td>
-                <?php echo "<button type='submit' style=\"background-color: crimson; width: 80%; border-radius: 20px\"><a href='reserveTicketCancel.php'>Cancel Ticket</a></button>"; ?>
+                <?php echo "<button type='submit'  style=\"background-color: crimson; width: 80%; border-radius: 20px\" onclick=\"window.location.href='../guest/ticketCanceledBy_G.php'\">Cancel Ticket</button>"; ?>
             </td>
         </tr>
+
         <?php
         }
         }
-        $_SESSION['journeyId'] = $journeyId;
-        $_SESSION['reservationId'] = $reservationId;
         }
         ?>
         </tr>
-    </table>
+    </table><?php } ?>
 </div>
 
 
@@ -111,3 +101,12 @@ $reservationId = $_SESSION['reservationId'];
 
 </body>
 </html>
+
+<script>
+    var modal = document.getElementById('id01');
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

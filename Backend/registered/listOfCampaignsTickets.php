@@ -9,7 +9,7 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-if (isset($_POST['select'])) {
+if (isset($_POST['campaignId'])) {
 $campaignId = $_POST['campaignId'];
 ?>
 
@@ -32,21 +32,7 @@ $campaignId = $_POST['campaignId'];
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="registerUserProfile.php"><?php
-            $email = $_SESSION['email'];
-            $query = "SELECT * FROM users WHERE emailaddress='$email'";
-            if (isset($conn)) {
-                $queryConn = mysqli_query($conn, $query);
-
-                if (!$queryConn){
-                    echo "Error";
-                }else{
-                    while($row = mysqli_fetch_array($queryConn)){
-                        $name = $row['userName'];
-                        echo "Hi! ".$name;
-                    }
-                }
-            } ?></a>
+        <a href="registerUserProfile.php"><?php include "registeredUserName.php"?></a>
         <a href="../logout.php">Logout</a>
     </div>
 </div>
@@ -55,6 +41,7 @@ $campaignId = $_POST['campaignId'];
     <hr class="hr_main">
     <table id="seats" style="width: 85%">
         <tr style="color: darkred">
+            <th>Bus</th>
             <th>From</th>
             <th>To</th>
             <th>Date</th>
@@ -79,20 +66,24 @@ $campaignId = $_POST['campaignId'];
             $journeyDate = strtotime($journeyDate);
 
             $price = $row['price'];
-            if ($today <= $journeyDate) {
+            if ($today < $journeyDate) {
             ?>
         <tr>
+            <td><img src="../img/bus.png" width="50px" height="50px"></td>
             <td><?php echo $row['DeparturePlace']; ?></td>
             <td><?php echo $row['DestinationPlace']; ?></td>
-            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php
+                $originalDate = $row['journeyDate'];
+                $newDate = date("d-m-Y", strtotime($originalDate));
+                echo $newDate  ?></td>
             <td><?php echo $row['journeyTime']; ?></td>
             <td><?php echo $price ?></td>
             <td>
                 <?php
                 if ($row['isCancelled'] == '1') {
-                    echo "<button type='submit' style=\"background-color: darkgray; width: 70%; color: black; font-weight: bolder; border-radius: 20px; font-size: 14px;\" disabled>Disabled</button>";
+                    echo "<button type='submit' style=\"background-color: darkgray; width: 70%; color: black; font-weight: bolder; border-radius: 20px; font-size: 14px;\" disabled>Past Journey</button>";
                 }else{
-                    echo "<form action='campaignBuyInfo_RU.php' method='POST'><button type='submit' value =" . $row['journeyId'] . " name=\"journeyId\" style='background-color: darkgreen; width: 70%; border-radius: 20px'>Buy Ticket</button></form>"; ?>
+                    echo "<form action='chooseSeatCampaignTicket.php' method='POST'><button type='submit' value =" . $row['journeyId'] . " name=\"journeyId\" style='background-color: darkgreen; width: 70%; border-radius: 20px'>Buy Ticket</button></form>"; ?>
             </td>
         </tr>
         <?php
@@ -100,7 +91,6 @@ $campaignId = $_POST['campaignId'];
         }
         }
         }
-
         }
         ?>
         </tr>

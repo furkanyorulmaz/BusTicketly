@@ -98,6 +98,7 @@ $price = "";
     <hr class="hr_main">
     <table id="seats" style="width: 85%">
         <tr style="color: darkred">
+            <th>Bus</th>
             <th>From</th>
             <th>To</th>
             <th>Date</th>
@@ -106,7 +107,7 @@ $price = "";
             <th>Buy Ticket Action</th>
             <!-- Burası Biletlerin listelenmeye basladıgı yer -->
             <?php
-            $query = "SELECT * FROM journey WHERE DeparturePlace='$from' AND DestinationPlace='$to' AND journeyDate='$date' ORDER BY journeyDate";
+            $query = "SELECT * FROM journey WHERE DeparturePlace='$from' AND DestinationPlace='$to'  AND journeyDate='$date' ORDER BY journeyDate";
 
             if (isset($conn)) {
             $result = mysqli_query($conn, $query);
@@ -114,12 +115,22 @@ $price = "";
             if (mysqli_num_rows($result) == 0) {
                 echo '<script> 
                           if(confirm("We can not find any journey. Choose an other date!")) {
-                                window.location.href = "../base/homepage_RU.php"
+                                window.location.href = "../base/homepage_G.php"
                       }</script>';
                 exit();
             }
 
             while ($row = mysqli_fetch_array($result)) {
+            $today = strtotime("today");
+            $journeyDate = $row['journeyDate'];
+            $journeyDate = strtotime($journeyDate);
+            if($today == $journeyDate){
+                echo '<script> 
+                          if(confirm("We can not view journeys. Choose an other date!")) {
+                                window.location.href = "../base/homepage_G.php"
+                      }</script>';
+                exit();
+            }
 
             if ($row['isCancelled'] == '1') {
                 echo '<script> 
@@ -130,15 +141,18 @@ $price = "";
             }
             ?>
         <tr>
+            <td><img src="../img/bus.png" width="50px" height="50px"></td>
             <td><?php echo $row['DeparturePlace']; ?></td>
             <td><?php echo $row['DestinationPlace']; ?></td>
-            <td><?php echo $row['journeyDate']; ?></td>
+            <td><?php
+                $originalDate = $row['journeyDate'];
+                $newDate = date("d-m-Y", strtotime($originalDate));
+                echo $newDate  ?></td>
             <td><?php echo $row['journeyTime']; ?></td>
             <td><?php echo $row['price']; ?> TL</td>
             <td>
                 <?php
-                //$_SESSION['journeyId'] = $row['journeyId'];
-                echo "<form action='guestBuyInformation_G.php' method='post'><button style=\"background-color: darkgreen; width: 50%; border-radius: 20px\" value =" . $row['journeyId'] . " name=\"journeyId\">Buy Ticket</button></form>";
+                echo "<form action='chooseSeatNoBuy_G.php' method='post'><button style=\"background-color: darkgreen; width: 70%; border-radius: 20px\" value =" . $row['journeyId'] . " name=\"journeyId\">Buy Ticket</button></form>";
                 ?>
             </td>
         </tr>

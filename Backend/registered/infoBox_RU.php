@@ -57,19 +57,7 @@ if (!$result) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
-        <a href="registerUserProfile.php"><?php
-            $email = $_SESSION['email'];
-            $query = "SELECT * FROM users WHERE emailaddress='$email'";
-            $queryConn = mysqli_query($conn, $query);
-
-            if (!$queryConn) {
-                echo "Error";
-            } else {
-                while ($row = mysqli_fetch_array($queryConn)) {
-                    $name = $row['userName'];
-                    echo "Hi! " . $name;
-                }
-            } ?></a>
+        <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
         <a href="../logout.php">Logout</a>
     </div>
 </div>
