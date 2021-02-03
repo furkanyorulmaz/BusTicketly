@@ -12,9 +12,13 @@ if (!isset($_SESSION['email'])) {
 if (isset($_SESSION)) {
 
 $journeyId = $_SESSION['journeyId'];
+<<<<<<< HEAD
 #echo " ".$journeyId;
 $query = "SELECT * FROM journey WHERE journeyId='$journeyId'";
 
+=======
+$query = "SELECT * FROM journey WHERE journeyId='$journeyId';";
+>>>>>>> main
 if (isset($conn)) {
 $result = mysqli_query($conn, $query);
 
@@ -22,6 +26,11 @@ if (!$result) {
     echo "SQL error, check your code.";
 } else {
 ?>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,11 +89,29 @@ if (!$result) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+<<<<<<< HEAD
         <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
+=======
+        <a href="registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+
+            $queryConn = mysqli_query($conn, $query);
+            if (!$queryConn) {
+                echo "Error";
+            } else {
+                while ($row = mysqli_fetch_array($queryConn)) {
+                    $name = $row['userName'];
+                    echo " " . $name;
+                }
+            }
+            ?></a>
+>>>>>>> main
         <a href="../logout.php">Logout</a>
     </div>
 </div>
 
+<<<<<<< HEAD
 <form action="registeredReserveInfo.php" method="POST">
     <div class="container">
         <div style="margin-top: -30px; width: 30%;">
@@ -101,6 +128,16 @@ if (!$result) {
         <hr class="hr_main">
         <?php
 
+=======
+<form action="#" method="POST">
+    <div class="container">
+        <h1>Choose Seat Number</h1>
+        <hr class="hr_main">
+        <h3>You can only choose one seat</h3>
+        <hr>
+
+        <?php
+>>>>>>> main
         while ($row = mysqli_fetch_array($result)) {
 
             for ($i = 1; $i <= 24; $i++) {
@@ -115,32 +152,74 @@ if (!$result) {
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
+<<<<<<< HEAD
                             <input type="checkbox" value="' . $i . '" name="seats[]" checked="checked" disabled="disabled">
+=======
+                            <input type="checkbox" value="' . $i . '" name="seat" checked="checked" disabled="disabled">
+>>>>>>> main
                             <span class="checkmark"></span>
                         </label>
                     </div>';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
                 } else {
 
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
+<<<<<<< HEAD
                             <input type="checkbox" value="' . $i . '" name="seats[]">
+=======
+                            <input type="checkbox" value="' . $i . '" name="seat">
+>>>>>>> main
                             <span class="checkmark"></span>
                         </label>
                     </div>';
                 }
             }
+<<<<<<< HEAD
+=======
+
+
+        }
+        if (isset($_POST['choose_seat_regUser'])) {
+            $seatId = $_POST['seat'];
+            $reservationId = $_SESSION['reservationId'];
+            $seatAdd = "UPDATE reservation SET seatId='$seatId' WHERE reservationId='$reservationId'";
+            $output = mysqli_query($conn, $seatAdd);
+            if (!$output) {
+                #echo "Error";
+                echo '<script language="javascript">';
+                echo "alert('Something wrong.')";
+                echo '</script>';
+                exit();
+            } else {
+                echo '<script>
+                             if(confirm("Your ticket reserved, successfully.")) {
+                                 window.location.href = "finishedReserveTicket_RU.php"
+                       }</script>';
+                exit();
+            }
+>>>>>>> main
         }
         }
         }
         }
         ?>
+<<<<<<< HEAD
         <br><br><br><br>
         <br><br><br><br><br>
         <div class="cancel_signup">
 
+=======
+
+        <br><br><br><br>
+        <br><br><br><br><br>
+        <div class="cancel_signup">
+>>>>>>> main
             <label class="container_box">
                 <input type="checkbox" disabled>
                 <span class="checkmark"></span>
@@ -153,6 +232,7 @@ if (!$result) {
                 Full Seat
             </label>
 
+<<<<<<< HEAD
             <button type="button" onClick="window.location.href = '../base/homepage_RU.php'" class="returnbtn"
                     style="width:10%">Return
             </button>
@@ -160,6 +240,13 @@ if (!$result) {
                 Next
             </button>
 
+=======
+            <button type="button" class="returnbtn" style="background-color: dimgray; width: 15%;"><a
+                        href="listOfJourneys_RU.php">Return</a></button>
+            <button type="submit" class="nextbtn" style="background-color: cornflowerblue" name="choose_seat_regUser">
+                Next
+            </button>
+>>>>>>> main
         </div>
     </div>
 </form>

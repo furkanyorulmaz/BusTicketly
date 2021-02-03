@@ -9,17 +9,35 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+<<<<<<< HEAD
 if (isset($_POST['journeyId'])) {
 $journeyId = $_POST['journeyId'];
 $_SESSION['journeyId'] = $journeyId;
 
 $query = "SELECT * FROM journey WHERE journeyId='$journeyId';";
 
+=======
+if (isset($_SESSION)) {
+$PNR = $_SESSION['PNR'];
+$journeyId = $_SESSION['journeyId'];
+
+$query = "SELECT * FROM journey WHERE journeyId='$journeyId';";
+
+#echo "".$journeyId;
+>>>>>>> main
 if (isset($conn)) {
 $result = mysqli_query($conn, $query);
 
 if (!$result) {
+<<<<<<< HEAD
     echo "SQL error, check your code.";
+=======
+    #echo "SQL error, check your code.";
+    echo '<script language="javascript">';
+    echo "alert('Something connection problem.')";
+    echo '</script>';
+    exit();
+>>>>>>> main
 } else {
 ?>
 
@@ -82,11 +100,29 @@ if (!$result) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+<<<<<<< HEAD
         <a href="registerUserProfile.php"><?php include "registeredUserName.php"?></a>
+=======
+        <a href="registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+
+            $queryConn = mysqli_query($conn, $query);
+            if (!$queryConn) {
+                echo "Error";
+            } else {
+                while ($row = mysqli_fetch_array($queryConn)) {
+                    $name = $row['userName'];
+                    echo " " . $name;
+                }
+
+            } ?></a>
+>>>>>>> main
         <a href="../logout.php">Logout</a>
     </div>
 </div>
 
+<<<<<<< HEAD
 <form action="campaignBuyInfo_RU.php" method="POST">
     <div class="container">
 
@@ -103,6 +139,16 @@ if (!$result) {
         <h1>Choose Seat Number</h1>
         <hr class="hr_main">
         <?php
+=======
+<form action="#" method="POST">
+    <div class="container">
+        <h1>Choose Seat Number</h1>
+        <hr class="hr_main">
+        <h3>You can only choose one seat</h3>
+        <hr>
+        <?php
+
+>>>>>>> main
         while ($row = mysqli_fetch_array($result)) {
 
             for ($i = 1; $i <= 24; $i++) {
@@ -117,23 +163,55 @@ if (!$result) {
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
+<<<<<<< HEAD
                             <input type="checkbox" value="' . $i . '" name="seats[]" checked="checked" disabled="disabled">
+=======
+                            <input type="checkbox" value="' . $i . '" name="seat" checked="checked" disabled="disabled">
+>>>>>>> main
                             <span class="checkmark"></span>
                         </label>
                     </div>';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
                 } else {
 
                     echo '    
                     <div class="column">
                         <label class="container_box">' . $i . '
+<<<<<<< HEAD
                             <input type="checkbox" value="' . $i . '" name="seats[]">
+=======
+                            <input type="checkbox" value="' . $i . '" name="seat">
+>>>>>>> main
                             <span class="checkmark"></span>
                         </label>
                     </div>';
                 }
             }
+<<<<<<< HEAD
+=======
+
+
+        }
+        if (isset($_POST['choose_seat_regUser'])) {
+            $seatId = $_POST['seat'];
+            $seatAdd = "UPDATE ticket SET seatId='$seatId' WHERE PNR='$PNR'";
+            $output = mysqli_query($conn, $seatAdd);
+            if (!$output) {
+                #echo "Error";
+                echo '<script language="javascript">';
+                echo "alert('Something wrong.')";
+                echo '</script>';
+                exit();
+            } else {
+                echo '<script>window.location.href = "campaignTicketPayment_RU.php"
+                       </script>';
+                exit();
+            }
+>>>>>>> main
         }
         }
         }
@@ -155,14 +233,26 @@ if (!$result) {
                 Full Seat
             </label>
 
+<<<<<<< HEAD
             <button type="button" onClick="window.location.href = 'campaigns_RU.php'" class="returnbtn" style="width:10%">Return</button>
             <button type="submit" class="nextbtn" style="background-color: cornflowerblue"
                     name="choose_seat_regUser">
                 Next
+=======
+            <button type="button" class="returnbtn" style="background-color: darkslategray"><a
+                        href="listOfJourneys_RU.php">Return</a></button>
+            <button type="submit" class="nextbtn" style="background-color: cornflowerblue"
+                    name="choose_seat_regUser">
+                Payment
+>>>>>>> main
             </button>
         </div>
     </div>
 </form>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 <br>
 <footer class="main_footer">
     <h5 id="footer_text"> All Rights Reserved By BUS TICKETLY. © 2020</h5>

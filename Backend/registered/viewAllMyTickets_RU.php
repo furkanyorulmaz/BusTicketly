@@ -53,7 +53,11 @@ $email = $_SESSION['email'];
             <th>Time</th>
             <th>Price</th>
             <th>SeatNo</th>
+<<<<<<< HEAD
 
+=======
+            <th>Ticket Type</th>
+>>>>>>> main
             <?php
             $query = "SELECT * FROM journey J, ticket T WHERE J.journeyId=T.journeyId AND T.emailaddress='$email' AND T.seatId!='0' ORDER BY J.journeyDate";
             if (isset($conn)) {
@@ -111,7 +115,11 @@ $email = $_SESSION['email'];
                 }
                 ?></td>
             <td><?php echo $seatId1 ?></td>
+<<<<<<< HEAD
 
+=======
+            <td><?php echo $row['ticketType']; ?></td>
+>>>>>>> main
             <td>
                 <?php
                 if (($row['ticketType'] == 'Campaign')) {
@@ -140,6 +148,10 @@ $email = $_SESSION['email'];
             <th>Time</th>
             <th>Price</th>
             <th>SeatNo</th>
+<<<<<<< HEAD
+=======
+            <th>Ticket Type</th>
+>>>>>>> main
             <?php
             $query2 = "SELECT * FROM journey J, reservation R WHERE J.journeyId=R.journeyId AND R.seatId!='0' AND R.emailLUser='$email' ORDER BY J.journeyDate";
             $result2 = mysqli_query($conn, $query2);
@@ -154,7 +166,10 @@ $email = $_SESSION['email'];
             $journeyDate = strtotime($journeyDate);
 
             if ($today > $journeyDate) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
                 $ticketType = $row2['ticketType'];
                 $reservationId = $row2['reservationId'];
 
@@ -177,6 +192,10 @@ $email = $_SESSION['email'];
             <td><?php echo $row2['journeyTime']; ?></td>
             <td><?php echo $row2['price']; ?></td>
             <td><?php echo $seatId2 ?></td>
+<<<<<<< HEAD
+=======
+            <td><?php echo $row2['ticketType']; ?></td>
+>>>>>>> main
             <td>
                 <?php
 
@@ -192,6 +211,7 @@ $email = $_SESSION['email'];
                     echo "<form action='reservedTicketPayment_RU.php' method='POST'><button type='submit' value=" . $row2['reservationId'] . " name=\"reservationId\"  style=\"background-color: deepskyblue; width: 70%; border-radius: 20px; font-weight: bolder; font-size: 14px;\">Buy Ticket</button></form>";
 
                 } else {
+<<<<<<< HEAD
                     $deletePastTicket = "UPDATE reservation SET isCancelled='1',ticketType='Cancelled',seatId='0' WHERE  reservationId='$pnr'";
                     $deleted = mysqli_query($conn, $deletePastTicket);
                     echo "<button type='submit' disabled style=\"background-color:darkgray; width: 70%; border-radius: 20px; font-weight: bolder; font-size: 14px;\">Buy Ticket</button>";
@@ -223,6 +243,10 @@ $email = $_SESSION['email'];
                 }
                 echo "<button type='submit' style=\"background-color: crimson; width: 70%; border-radius: 20px; font-weight: bolder; font-size: 14px;\"><a href='reserveTicketCancel.php'>Cancel Ticket</a></button>";
 
+=======
+                    echo "<button type='submit' style=\"background-color: crimson; width: 70%; border-radius: 20px; font-weight: bolder; font-size: 14px;\"><a href='reserveTicketCancel.php'>Cancel Ticket</a></button>";
+                }
+>>>>>>> main
                 ?>
             </td>
             <?php

@@ -56,7 +56,24 @@ if (!$result) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+<<<<<<< HEAD
         <a href="../registered/registerUserProfile.php"><?php include'registeredUserName.php'; ?></a>
+=======
+        <a href="../registered/registerUserProfile.php"><?php
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn) {
+                    echo "Error";
+                } else {
+                    while ($row = mysqli_fetch_array($queryConn)) {
+                        $name = $row['userName'];
+                        echo " " . $name;
+                    }
+                }
+            } ?></a>
+>>>>>>> main
         <a href="../logout.php">Logout</a>
     </div>
 </div>

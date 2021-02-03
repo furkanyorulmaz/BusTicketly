@@ -22,6 +22,26 @@ if (!isset($_SESSION['email'])) {
         h3, p {
             font-family: 'Dubai Medium';
         }
+<<<<<<< HEAD
+=======
+
+        #campaignId {
+            width: 20%;
+            background-color: navajowhite;
+            font-size: 20px;
+            font-family: "Candara";
+            font-weight: bold;
+            color: black;
+        }
+
+        #select {
+            width: 14%;
+            margin-right: 65%;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+>>>>>>> main
     </style>
 </head>
 <body>
@@ -35,7 +55,25 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+<<<<<<< HEAD
         <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
+=======
+        <a href="registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn){
+                    echo "Error";
+                }else{
+                    while($row = mysqli_fetch_array($queryConn)){
+                        $name = $row['userName'];
+                        echo " ".$name;
+                    }
+                }
+            } ?></a>
+>>>>>>> main
         <a href="../logout.php">Logout</a>
     </div>
 </div>
@@ -46,6 +84,29 @@ if (!isset($_SESSION['email'])) {
     <form action="listOfCampaignsTickets.php" method="POST">
 
         <?php
+<<<<<<< HEAD
+=======
+        #$query = "SELECT campaignId  FROM journey WHERE campaignId > 0;";
+        #$output = mysqli_query($conn, $query);
+        #if (!$output) {
+        #    echo "SQL error, check your query";
+        #} else {
+        #}
+        #$queryCampaign = "SELECT campaignContent FROM campaign WHERE campaignId='$campaignId';";
+        #$output = mysqli_query($conn, $query);
+        ?>
+        <select id="campaignId" name="campaignId">
+            <option value="1"> Campaign 1 <?php ?> </option>
+            <option value="2"> Campaign 2 <?php ?> </option>
+            <option value="3"> Campaign 3 <?php ?> </option>
+            <option value="4"> Campaign 4 <?php ?> </option>
+        </select>
+        <!-- <p>Campaign Content: </p>-->
+
+        <button class="addjourneybtn" id="select" name="select">Select Campaign</button>
+        <br><br><br><br><br>
+        <?php
+>>>>>>> main
         /*Listed all campaigns system*/
         $allCampaigns = "SELECT * FROM campaign";
         if (isset($conn)) {
@@ -64,10 +125,13 @@ if (!isset($_SESSION['email'])) {
                     ?>
                     <h3 style="color: #f44336">Campaign: <?php echo " " . $id ?></h3>
                     <p style="color: forestgreen">Description: <?php echo " ' " . $content . " ' " ?></p>
+<<<<<<< HEAD
                    <?php echo '<form action="listOfCampaignsTickets.php" method="POST">
                         <button class="adminSignbtn" style="width: 10%; margin-left: 25%; margin-top: -50px" value='.$row["campaignId"].'  name="campaignId">Select</button>
                     </form>'
                     ?>
+=======
+>>>>>>> main
                     <hr>
                     <?php
                 }

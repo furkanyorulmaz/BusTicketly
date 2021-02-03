@@ -28,7 +28,25 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Right-aligned links -->
     <div class="navbar-right">
+<<<<<<< HEAD
         <a href="registerUserProfile.php"><?php include "registeredUserName.php"; ?></a>
+=======
+        <a href="registerUserProfile.php"><?php
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM users WHERE emailaddress='$email'";
+            if (isset($conn)) {
+                $queryConn = mysqli_query($conn, $query);
+
+                if (!$queryConn){
+                    echo "Error";
+                }else{
+                    while($row = mysqli_fetch_array($queryConn)){
+                        $name = $row['userName'];
+                        echo " ".$name;
+                    }
+                }
+            } ?></a>
+>>>>>>> main
         <a href="../logout.php">Logout</a>
     </div>
 </div>
@@ -42,7 +60,11 @@ if (!isset($_SESSION['email'])) {
 
         <br>
         <label>Enter CCN for canceling:</label>
+<<<<<<< HEAD
         <input style="width: 30%" type="text" placeholder="Enter CCNumber" pattern="[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}" name="ccn">
+=======
+        <input style="width: 30%" type="text" placeholder="Enter CCNumber" name="ccn">
+>>>>>>> main
 
         <button style="width: 10%" type="submit" class="canceljourney_tiketbtn" name="cancel_ticket">Cancel</button>
     </form>
@@ -60,8 +82,14 @@ if (!isset($_SESSION['email'])) {
 if (isset($_POST['cancel_ticket'])) {
 
     date_default_timezone_set("Europe/Istanbul");
+<<<<<<< HEAD
     $PNR = $_POST['pnr'];
     $ticketDate = "SELECT * FROM ticket WHERE PNR='$PNR'";
+=======
+    #geçersiz pnr diye alert vermeli
+    $PNR = $_POST['pnr'];
+    $ticketDate = "SELECT * FROM ticket WHERE PNR='$PNR' AND ticketType='Selling'";
+>>>>>>> main
     if (isset($conn)) {
         $result = mysqli_query($conn, $ticketDate);
 
@@ -76,6 +104,7 @@ if (isset($_POST['cancel_ticket'])) {
             while ($row = mysqli_fetch_array($result)) {
                 $journeyId = $row['journeyId'];
 
+<<<<<<< HEAD
                 if($row['ticketType'] == 'Campaign'){
                     echo '<script> 
                         if(confirm("You cannot cancel campaign ticket! \n Sorry, dont be sad ;). ")) {
@@ -84,6 +113,8 @@ if (isset($_POST['cancel_ticket'])) {
                     exit();
                 }
 
+=======
+>>>>>>> main
                 $query = "SELECT * FROM journey WHERE journeyId='$journeyId'";
                 $result2 = mysqli_query($conn, $query);
                 while ($row2 = mysqli_fetch_array($result2)) {

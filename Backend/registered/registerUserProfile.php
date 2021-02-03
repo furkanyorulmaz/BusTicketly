@@ -101,10 +101,17 @@ $phone = $row['mobilePhone'];
 <div class="container" style="width:50%; margin-top:-27%; float:right">
     <h1>All Transactions</h1>
     <hr class="hr_main">
+<<<<<<< HEAD
     <button style="font-weight:bold; background-color:firebrick" onclick="window.location.href='viewAllMyTickets_RU.php'" type="submit" class="ticket_transactions_btn">All My Tickets</button>
     <button style="font-weight:bold; background-color:firebrick" onclick="window.location.href='pastTickets_RU.php'" type="submit" class="ticket_transactions_btn">Date Past Tickets</button>
     <button style="font-weight:bold; background-color:firebrick" onclick="window.location.href='infoBox_RU.php'" type="submit" class="ticket_transactions_btn">Info Box</button>
     <button style="font-weight:bold; background-color:firebrick" onclick="window.location.href='campaigns_RU.php'" type="submit" class="ticket_transactions_btn">View Campaigns</button>
+=======
+    <button type="submit" class="ticket_transactions_btn"><a href="viewAllMyTickets_RU.php">All My Tickets</a></button>
+    <button type="submit" class="ticket_transactions_btn"><a href="pastTickets_RU.php">Date Past Tickets</a></button>
+    <button type="submit" class="ticket_transactions_btn"><a href="infoBox_RU.php">Info Box</a></button>
+    <button type="submit" class="ticket_transactions_btn"><a href="campaigns_RU.php">View Campaigns</a></button>
+>>>>>>> main
 </div>
 <br><br>
 <footer class="main_footer">
